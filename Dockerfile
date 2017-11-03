@@ -4,6 +4,7 @@ RUN apk update
 
 RUN apk add \
     python2 \
+    python2-dev \
     py2-pip \
     sqlite \
     curl \
