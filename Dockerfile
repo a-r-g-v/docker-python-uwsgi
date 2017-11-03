@@ -1,17 +1,25 @@
-FROM ubuntu:16.04
+FROM alpine:3.6
 
-RUN apt-get update -y && apt-get upgrade -y
-RUN apt-get install -y python python-pip sqlite3 python-dev curl git libmysqlclient-dev wget
-RUN pip install --upgrade pip
+RUN apk update
 
-RUN wget https://github.com/progrium/entrykit/releases/download/v0.4.0/entrykit_0.4.0_Linux_x86_64.tgz && \
-    tar xf entrykit_0.4.0_Linux_x86_64.tgz && \
+RUN apk add \
+    python2 \
+    python2-dev \
+    sqlite \
+    curl \
+    mariadb-libs \
+    mariadb-dev \
+    build-base \
+    linux-headers \
+    pcre-dev
+
+RUN curl -L -\# \
+    https://github.com/progrium/entrykit/releases/download/v0.4.0/entrykit_0.4.0_Linux_x86_64.tgz \
+    | tar zx && \
     mv ./entrykit /usr/local/bin/. && \
     chmod +x /usr/local/bin/entrykit && \
     entrykit --symlink
 
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN curl https://bootstrap.pypa.io/get-pip.py | python
 
-RUN pip install uwsgi flask flask-script flask-cors flask-redis flask-sqlalchemy requests requests_mock simplejson validators raven blinker mockredispy mysql-python python-dateutil six google-cloud-pubsub more_itertools
-
-
+RUN pip install uwsgi
