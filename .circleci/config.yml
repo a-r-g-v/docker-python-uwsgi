@@ -34,6 +34,7 @@ jobs:
           name: Push application Docker image
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
+              docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
               docker tag app "gnex/docker-python-uwsgi:${CIRCLE_SHA1}"
               docker push "gnex/docker-python-uwsgi:${CIRCLE_SHA1}"
             fi
