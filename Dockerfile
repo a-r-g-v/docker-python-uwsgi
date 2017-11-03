@@ -6,7 +6,9 @@ RUN apk add \
     python2 \
     py2-pip \
     sqlite \
-    curl
+    curl \
+    mariadb-libs \
+    mariadb-dev
 RUN pip install --upgrade pip
 
 RUN curl -L -\# \
