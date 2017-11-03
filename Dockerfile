@@ -1,21 +1,17 @@
 FROM ubuntu:16.04
 
-RUN apk update
-
-RUN apk add \
-    python2 \
-    py2-pip \
-    sqlite \
-    curl
+RUN apt-get update -y && apt-get upgrade -y
+RUN apt-get install -y python python-pip sqlite3 python-dev curl git libmysqlclient-dev wget
 RUN pip install --upgrade pip
 
-RUN curl -L -\# \
-    https://github.com/progrium/entrykit/releases/download/v0.4.0/entrykit_0.4.0_Linux_x86_64.tgz \
-    | tar zx && \
+RUN wget https://github.com/progrium/entrykit/releases/download/v0.4.0/entrykit_0.4.0_Linux_x86_64.tgz && \
+    tar xf entrykit_0.4.0_Linux_x86_64.tgz && \
     mv ./entrykit /usr/local/bin/. && \
     chmod +x /usr/local/bin/entrykit && \
     entrykit --symlink
 
-RUN curl https://bootstrap.pypa.io/get-pip.py | python
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-RUN pip install uwsgi
+RUN pip install uwsgi flask flask-script flask-cors flask-redis flask-sqlalchemy requests requests_mock simplejson validators raven blinker mockredispy mysql-python python-dateutil six google-cloud-pubsub more_itertools
+
+
