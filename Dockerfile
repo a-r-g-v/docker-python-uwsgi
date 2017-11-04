@@ -11,7 +11,8 @@ RUN apk add \
     mariadb-dev \
     build-base \
     linux-headers \
-    pcre-dev
+    pcre-dev \
+    git
 
 RUN curl -L -\# \
     https://github.com/progrium/entrykit/releases/download/v0.4.0/entrykit_0.4.0_Linux_x86_64.tgz \
